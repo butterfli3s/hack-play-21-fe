@@ -1,3 +1,5 @@
+Disclaimer: This is my Hack&Play 2025 contribution, and it is meant to interface with this backend: https://github.com/JustargonY/hack-play-21
+
 # sv
 
 Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
