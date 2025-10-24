@@ -4,14 +4,14 @@
 		.then((response) => response.json())
 		.then((result) => [...new Map(result.map((item) => [item.user_id, item])).values()])
 		.catch((error) => console.error('Error fetching JSON:', error));
-	const selected_user = $state({ user_id: '', cell_rk: 0, start_dttm: '' });
+	const selected_user = $state({ user_id: '', cell_id: 0, timestamp: '', text: 'dupa' });
 	const update_user = () =>
 		fetch('./user_locations_hackplay_sample.json')
 			.then((response) => response.json())
 			.then((users) => {
 				const user = users.filter((data) => selected_user.user_id === data.user_id)[0];
-				selected_user.cell_rk = user.cell_rk;
-				selected_user.start_dttm = user.start_dttm;
+				selected_user.cell_id = user.cell_rk;
+				selected_user.timestamp = 0;
 			})
 			.catch((error) => console.error('Error fetching JSON:', error));
 </script>
@@ -22,9 +22,17 @@
 	<form
 		onsubmit={(event) => {
 			event.preventDefault();
-			console.log('User ID ' + event.target[0].value);
-			console.log('Cell ID ' + event.target[1].value);
-			console.log('Timestamp ' + event.target[2].value);
+			fetch('http://localhost:8000/signal', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'Access-Control-Allow-Origin': '*'
+				},
+				body: JSON.stringify(selected_user)
+			})
+				.then((response) => response.json())
+				.then((data) => console.log(data))
+				.catch((error) => console.error('Error:', error));
 		}}
 	>
 		<label for="user_id">User ID:</label><br />
@@ -35,10 +43,13 @@
 		</select>
 		<br />
 		<label for="cell_rk">Inferred cell ID:</label><br />
-		<input type="text" id="cell_rk" name="cell_rk" value={selected_user.cell_rk} />
+		<input type="text" id="cell_rk" name="cell_rk" bind:value={selected_user.cell_id} />
 		<br />
 		<label for="start_dttm">Inferred date:</label><br />
-		<input type="text" id="start_dttm" name="start_dttm" value={selected_user.start_dttm} />
+		<input type="text" id="start_dttm" name="start_dttm" bind:value={selected_user.timestamp} />
+		<br />
+		<label for="text">Inferred date:</label><br />
+		<input type="text" id="text" name="text" bind:value={selected_user.text} />
 		<br />
 		<button type="submit">Submit</button>
 	</form>
