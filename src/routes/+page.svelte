@@ -1,5 +1,6 @@
 <script>
 	import { Map as WorldMap, TileLayer, Marker, Popup } from 'sveaflet';
+	import Form from './Form.svelte';
 	const cells = fetch('./hackplay_cells.json')
 		.then((response) => response.json())
 		.catch((error) => console.error('Error fetching JSON:', error));
@@ -14,4 +15,5 @@
 			{/each}
 		{/await}
 	</WorldMap>
+	<Form />
 </div>
