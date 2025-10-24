@@ -10,7 +10,7 @@
 			.then((users) => {
 				const user = users.filter((data) => selected_user.user_id === data.user_id)[0];
 				selected_user.cell_id = user.cell_rk;
-				selected_user.timestamp = 0;
+				selected_user.timestamp = user.start_dttm;
 			})
 			.catch((error) => console.error('Error fetching JSON:', error));
 	let result_msg = $state('');
