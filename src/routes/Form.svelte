@@ -1,10 +1,9 @@
 <script>
-	import { enhance } from '$app/forms';
 	const user_locations = fetch('./user_locations_hackplay_sample.json')
 		.then((response) => response.json())
 		.then((result) => [...new Map(result.map((item) => [item.user_id, item])).values()])
 		.catch((error) => console.error('Error fetching JSON:', error));
-	const selected_user = $state({ user_id: '', cell_id: 0, timestamp: '', text: 'dupa' });
+	const selected_user = $state({ user_id: '', cell_id: 0, timestamp: '', text: '' });
 	const update_user = () =>
 		fetch('./user_locations_hackplay_sample.json')
 			.then((response) => response.json())
@@ -14,6 +13,7 @@
 				selected_user.timestamp = 0;
 			})
 			.catch((error) => console.error('Error fetching JSON:', error));
+	let result_msg = $state('');
 </script>
 
 {#await user_locations}
@@ -31,7 +31,9 @@
 				body: JSON.stringify(selected_user)
 			})
 				.then((response) => response.json())
-				.then((data) => console.log(data))
+				.then((json) => {
+					result_msg = json.message;
+				})
 				.catch((error) => console.error('Error:', error));
 		}}
 	>
@@ -56,3 +58,5 @@
 {:catch error}
 	<p>Error: {error}</p>
 {/await}
+
+<p>Request result: {result_msg}</p>
