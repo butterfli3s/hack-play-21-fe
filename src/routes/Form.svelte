@@ -47,10 +47,10 @@
 		<label for="cell_rk">Inferred cell ID:</label><br />
 		<input type="text" id="cell_rk" name="cell_rk" bind:value={selected_user.cell_rk} />
 		<br />
-		<label for="start_dttm">Inferred date:</label><br />
+		<!-- <label for="start_dttm">Inferred date:</label><br />
 		<input type="text" id="timestamp" name="timestamp" bind:value={selected_user.timestamp} />
-		<br />
-		<label for="text">Inferred date:</label><br />
+		<br /> -->
+		<label for="text">Insert your message:</label><br />
 		<input type="text" id="message" name="message" bind:value={selected_user.message} />
 		<br />
 		<button type="submit">Submit</button>
