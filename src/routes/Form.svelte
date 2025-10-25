@@ -3,7 +3,7 @@
 		.then((response) => response.json())
 		.then((result) => [...new Map(result.map((item) => [item.user_id, item])).values()])
 		.catch((error) => console.error('Error fetching JSON:', error));
-	const selected_user = $state({ user_id: '', cell_id: 0, timestamp: '', text: '' });
+	const selected_user = $state({ user_id: '', cell_rk: 0, timestamp: '', message: '' });
 	const update_user = () =>
 		fetch('./user_locations_hackplay_sample.json')
 			.then((response) => response.json())
@@ -45,13 +45,13 @@
 		</select>
 		<br />
 		<label for="cell_rk">Inferred cell ID:</label><br />
-		<input type="text" id="cell_rk" name="cell_rk" bind:value={selected_user.cell_id} />
+		<input type="text" id="cell_rk" name="cell_rk" bind:value={selected_user.cell_rk} />
 		<br />
 		<label for="start_dttm">Inferred date:</label><br />
-		<input type="text" id="start_dttm" name="start_dttm" bind:value={selected_user.timestamp} />
+		<input type="text" id="timestamp" name="timestamp" bind:value={selected_user.timestamp} />
 		<br />
 		<label for="text">Inferred date:</label><br />
-		<input type="text" id="text" name="text" bind:value={selected_user.text} />
+		<input type="text" id="message" name="message" bind:value={selected_user.message} />
 		<br />
 		<button type="submit">Submit</button>
 	</form>
