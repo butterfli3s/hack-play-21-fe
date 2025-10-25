@@ -4,7 +4,7 @@
 	import Form from './Form.svelte';
 	import L from 'leaflet';
 
-	let cells = [];
+	let cells = $state([]);
 
 	async function loadCells() {
 		try {
@@ -12,7 +12,7 @@
 			cells = await response.json();
 
 			// Initialize alert property (so it's always defined)
-			cells.forEach(c => (c.alert = false));
+			for (const c of cells) c.alert = false
 		} catch (err) {
 			console.error('Error loading hackplay_cells.json:', err);
 		}
@@ -24,7 +24,7 @@
 		ws.onmessage = (event) => {
 			const data = JSON.parse(event.data);
 			if (data.type === 'cell_update') {
-				const cell = cells.find(c => c.cell_rk === data.cell_rk);
+				const cell = cells.find((c) => c.cell_rk === data.cell_rk);
 				if (cell) {
 					cell.alert = data.status === 'alert';
 					// Force Svelte to notice the object changed
